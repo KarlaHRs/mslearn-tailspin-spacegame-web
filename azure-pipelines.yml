@@ -7,8 +7,8 @@ trigger:
 - '*'
 
 pool:
-  vmImage: 'ubuntu--20.04'
-  demands: 
+  vmImage: 'ubuntu-20.04'
+  demands:
   - npm
 
 variables:
@@ -17,14 +17,14 @@ variables:
 steps:
 - task: UseDotNet@2
   displayName: 'Use .NET SDK 5.x'
-  inputs: 
-    packageType: sdk 
+  inputs:
+    packageType: sdk
     version: '5.x'
 
 - task: Npm@1
   displayName: 'Run npm install'
-  inputs: 
-    verbose: false 
+  inputs:
+    verbose: false
 
 - script: './node_modules/.bin/node-sass Tailspin.SpaceGame.Web/wwwroot --output Tailspin.SpaceGame.Web/wwwroot'
   displayName: 'Compile Sass assets'
@@ -39,12 +39,12 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
   inputs:
-    commands: 'restore'
+    command: 'restore'
     projects: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: 'Build the project - Release'
   inputs:
     command: 'build'
-    arguments: '--no-retore --configuration Release'
+    arguments: '--no-restore --configuration Release'
     projects: '**/*.csproj'
